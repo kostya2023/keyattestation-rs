@@ -9,6 +9,6 @@ pub use crate::services::constraints_verifiers::{
     ConstraintsVerifier,
     matches_certificate::ConstraintVerifierMatchesCertificate,
     not_software::ConstraintVerifierNotSoftware,
-    strict_for_security_level::ConstraintsVerifierStrictForSecurityLevel,
-    strict_origin::ConstraintsVerifierStrictForOrigin,
+    strict_for_security_level::ConstraintVerifierStrictForSecurityLevel,
+    strict_origin::ConstraintVerifierStrictForOrigin,
 };
