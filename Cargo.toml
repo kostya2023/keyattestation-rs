@@ -1,0 +1,19 @@
+[package]
+name = "keyattestation-rs"
+version = "0.0.0-alpha.0"
+edition = "2024"
+
+[dependencies]
+rasn = "0.28.13"
+thiserror = "2.0.19"
+serde = { version = "1", features = ["derive"] }
+num-traits = "0.2.19"
+serde_cbor = "0.11.2"
+x509-parser = "0.18"
+reqwest = { version = "0.13", default-features = false, features = ["blocking", "rustls", "json"], optional = true }
+hex = "0.4"
+
+[features]
+verify-crl = ["dep:reqwest"]
+verify = ["x509-parser/verify"]
+verify-aws = ["x509-parser/verify-aws"]
