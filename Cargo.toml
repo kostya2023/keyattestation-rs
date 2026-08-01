@@ -17,3 +17,6 @@ hex = "0.4"
 verify-crl = ["dep:reqwest"]
 verify = ["x509-parser/verify"]
 verify-aws = ["x509-parser/verify-aws"]
+tests = []
+
+default = ["verify", "verify-crl"]
