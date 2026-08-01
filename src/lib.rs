@@ -8,3 +8,6 @@ pub mod domain;
 pub mod error;
 pub mod prelude;
 pub mod services;
+
+#[cfg(feature = "tests")]
+pub mod tests;
