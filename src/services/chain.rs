@@ -1,11 +1,8 @@
-use crate::error::KeyAttestationError;
 use crate::domain::schemas::CRL;
-use std::time::SystemTime;
-use x509_parser::{
-    asn1_rs::FromDer, 
-    certificate::X509Certificate
-};
+use crate::error::KeyAttestationError;
 use hex::encode;
+use std::time::SystemTime;
+use x509_parser::{asn1_rs::FromDer, certificate::X509Certificate};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct CertificateChain<'chain> {
@@ -195,14 +192,20 @@ impl<'chain> CertificateChain<'chain> {
             .connect_timeout(Duration::from_secs(30))
             .timeout(Duration::from_secs(60))
             .build()
-            .map_err(|_| KeyAttestationError::CertificateChainError("Verify chain error.".to_string()))?;
+            .map_err(|_| {
+                KeyAttestationError::CertificateChainError("Verify chain error.".to_string())
+            })?;
 
         let crl: CRL = client
             .get(url)
             .send()
-            .map_err(|_| KeyAttestationError::CertificateChainError("Verify chain error.".to_string()))?
+            .map_err(|_| {
+                KeyAttestationError::CertificateChainError("Verify chain error.".to_string())
+            })?
             .json()
-            .map_err(|_| KeyAttestationError::CertificateChainError("Verify chain error.".to_string()))?;
+            .map_err(|_| {
+                KeyAttestationError::CertificateChainError("Verify chain error.".to_string())
+            })?;
 
         self.verify_crl_with(&crl)?;
 
@@ -210,7 +213,8 @@ impl<'chain> CertificateChain<'chain> {
     }
 
     pub fn verify_crl_with(&self, crl: &CRL) -> Result<(), KeyAttestationError> {
-        let full_serials: Vec<String> = self.middle_certs
+        let full_serials: Vec<String> = self
+            .middle_certs
             .iter()
             .map(|cert| encode(cert.raw_serial()))
             .chain(std::iter::once(encode(self.target_cert.raw_serial())))
@@ -221,7 +225,7 @@ impl<'chain> CertificateChain<'chain> {
             if let Some(status) = crl.entries.get(&serial) {
                 if status.status == "REVOKED" {
                     return Err(KeyAttestationError::CertificateChainError(
-                        "Verify chain error.".to_string()
+                        "Verify chain error.".to_string(),
                     ));
                 }
             }

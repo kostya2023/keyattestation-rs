@@ -106,5 +106,5 @@ pub struct CRLStatus {
 
 #[derive(Debug, Clone, PartialEq, Eq, Deserialize)]
 pub struct CRL {
-    pub entries: HashMap<String, CRLStatus>
+    pub entries: HashMap<String, CRLStatus>,
 }
