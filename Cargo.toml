@@ -14,9 +14,9 @@ reqwest = { version = "0.13", default-features = false, features = ["blocking", 
 hex = "0.4"
 
 [features]
-verify-crl = ["dep:reqwest"]
-verify = ["x509-parser/verify"]
-verify-aws = ["x509-parser/verify-aws"]
+verify-crl-reqwest = ["dep:reqwest"]
+verify-sign = ["x509-parser/verify"]
+verify-sign-aws = ["x509-parser/verify-aws"]
 tests = []
 
-default = ["verify", "verify-crl"]
+default = ["verify-crl-reqwest", "verify-sign", "tests"]

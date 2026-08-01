@@ -47,7 +47,7 @@ impl<'chain> CertificateChain<'chain> {
         })
     }
 
-    #[cfg(any(feature = "verify", feature = "verify-aws"))]
+    #[cfg(any(feature = "verify-sign", feature = "verify-sign-aws"))]
     pub fn verify_signatures(&self) -> Result<(), KeyAttestationError> {
         self.root_cert
             .verify_signature(Some(&self.root_cert.subject_pki))
@@ -172,7 +172,7 @@ impl<'chain> CertificateChain<'chain> {
         Ok(())
     }
 
-    #[cfg(feature = "verify-crl")]
+    #[cfg(feature = "verify-crl-reqwest")]
     fn user_agent() -> String {
         format!(
             "keyattestation-rs/{} (https://github.com/kostya2023/keyattestation-rs)",
@@ -180,7 +180,7 @@ impl<'chain> CertificateChain<'chain> {
         )
     }
 
-    #[cfg(feature = "verify-crl")]
+    #[cfg(feature = "verify-crl-reqwest")]
     pub fn verify_crl(&self) -> Result<(), KeyAttestationError> {
         use reqwest::blocking::Client;
         use std::time::Duration;

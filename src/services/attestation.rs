@@ -66,7 +66,7 @@ impl<'attest> Attestation<'attest> {
         challenge: &[u8],
         constraints_for_verify: Option<Vec<Box<dyn ConstraintsVerifier>>>,
     ) -> Result<(), KeyAttestationError> {
-        #[cfg(any(feature = "verify", feature = "verify-aws"))]
+        #[cfg(any(feature = "verify-sign", feature = "verify-sign-aws"))]
         self.chain.verify_signatures()?;
         self.chain.verify_issuer()?;
         self.chain.verify_time(SystemTime::now())?;

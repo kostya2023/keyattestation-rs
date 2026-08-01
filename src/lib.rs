@@ -1,4 +1,4 @@
-#[cfg(all(feature = "verify", feature = "verify-aws"))]
+#[cfg(all(feature = "verify-sign", feature = "verify-sign-aws"))]
 compile_error!(
     "Features 'verify' and 'verify-aws' are mutually exclusive and cannot be used at the same time. Choose one."
 );
